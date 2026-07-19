@@ -1,4 +1,4 @@
-name: Build and Deploy GitHub Pages
+name: CCNA Live Lab Setup with Link check and GitHub Pages Deployment
 
 on:
   push:
