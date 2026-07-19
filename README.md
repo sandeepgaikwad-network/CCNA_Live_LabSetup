@@ -20,10 +20,10 @@ Each group focuses on a different routing and access control concept, complete w
 ![Group-4](assets/Group-4.gif)
 
 - **Devices IP Address Details** Chart
-![Chart](assets/Device%20IP%20Address%20Chart.gif)
+![Chart](assets/Device_IP_Address_Chart.gif)
 
 - **VLAN PCs IP Address** Chart
-![Chart](assets/PC%20VLAN%20IP%20Address%20Chart.gif)
+![Chart](assets/PC_VLAN_IP_Address_Chart.gif)
 
 ## Final Setup
 The complete integrated topology with all four groups combined:  
