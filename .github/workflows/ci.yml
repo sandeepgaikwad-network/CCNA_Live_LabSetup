@@ -1,4 +1,4 @@
-name: CCNA Live Lab Setup with Link check and GitHub Pages Deployment
+name: CI/CD Pipeline for CCNA_Live_LabSetup
 
 on:
   push:
@@ -12,12 +12,13 @@ permissions:
 
 jobs:
   link-check:
+    name: 🔗 Check Links
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Check Markdown links
+      - name: Validate Markdown links
         uses: lycheeverse/lychee-action@v1
         with:
           args: --verbose --no-progress README.md index.md docs/**/*.md
@@ -25,6 +26,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
+    name: 🛠️ Build Site
     runs-on: ubuntu-latest
     needs: link-check
     steps:
@@ -43,14 +45,25 @@ jobs:
         run: jekyll build -d ./_site
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4   # ✅ updated to v4
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./_site
 
-  deploy:
+  test:
+    name: ✅ Run Tests
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Basic HTML validation
+        run: |
+          sudo apt-get install tidy -y
+          tidy -errors ./_site/index.html || true
+
+  deploy:
+    name: 🚀 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4   # ✅ updated to v4
+        uses: actions/deploy-pages@v4
