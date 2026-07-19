@@ -26,51 +26,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
-    name: 🛠️ Build Site
-    runs-on: ubuntu-latest
-    needs: link-check
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-
-      # If you don’t want Jekyll, skip these two steps
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1'
-
-      - name: Install Jekyll
-        run: gem install jekyll bundler
-
-      - name: Build site
-        run: jekyll build -d ./_site || echo "Skipping Jekyll build"
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./   # publish repo root (index.md + assets)
-
-  test:
-    name: ✅ Run Tests
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Basic HTML validation
-        run: |
-          sudo apt-get install tidy -y
-          tidy -errors ./index.md || true
-
-  deploy:
-    name: 🚀 Deploy to GitHub Pages
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  build:
-    name: 🛠️ Build Site
+    name: 🛠️ Convert Markdown
     runs-on: ubuntu-latest
     needs: link-check
     steps:
@@ -85,5 +41,13 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./   # now includes index.html and assets
+          path: ./   # includes index.html and assets
 
+  deploy:
+    name: 🚀 Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
