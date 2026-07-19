@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy GitHub Pages
 
 on:
   push:
@@ -6,28 +6,51 @@ on:
       - main
 
 permissions:
-  contents: write   # Critical: allow GITHUB_TOKEN to push
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  deploy:
+  link-check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Check Markdown links
+        uses: lycheeverse/lychee-action@v1
         with:
-          node-version: '24'   # Node 20 is deprecated, use 24
+          args: --verbose --no-progress README.md index.md docs/**/*.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    runs-on: ubuntu-latest
+    needs: link-check
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Install Jekyll
+        run: gem install jekyll bundler
 
       - name: Build site
-        run: |
-          # If you have a build step (like Jekyll, Hugo, or MkDocs), add it here.
-          # For plain Markdown + assets, you can skip this step.
-          echo "No build step required"
+        run: jekyll build -d ./_site
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./   # Replace with ./public or ./docs if you have a build output folder
+          path: ./_site
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
