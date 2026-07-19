@@ -68,3 +68,13 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+- name: Convert Markdown to HTML
+  run: |
+    sudo apt-get install pandoc -y
+    pandoc index.md -o index.html
+
+- name: Upload artifact
+  uses: actions/upload-pages-artifact@v4
+  with:
+    path: ./   # now includes index.html
