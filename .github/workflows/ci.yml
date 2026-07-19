@@ -1,0 +1,43 @@
+name: CCNA Live Lab Setup CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Configure Git
+      - name: Configure Git
+        run: |
+          git config --global user.name "SandeepGaikwad-network"
+          git config --global user.email "sandeepgaikwad.network@gmail.com"
+
+      # Lint Markdown formatting
+      - name: Lint Markdown
+        uses: avto-dev/markdown-lint@v1
+        with:
+          config: .markdownlint.json
+
+      # Check all links (including GIFs/images)
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v1
+        with:
+          args: --verbose --no-progress .
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
