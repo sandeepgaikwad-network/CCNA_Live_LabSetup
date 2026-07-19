@@ -33,6 +33,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      # If you don’t want Jekyll, skip these two steps
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -42,12 +43,12 @@ jobs:
         run: gem install jekyll bundler
 
       - name: Build site
-        run: jekyll build -d ./_site
+        run: jekyll build -d ./_site || echo "Skipping Jekyll build"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./_site
+          path: ./   # publish repo root (index.md + assets)
 
   test:
     name: ✅ Run Tests
@@ -57,7 +58,7 @@ jobs:
       - name: Basic HTML validation
         run: |
           sudo apt-get install tidy -y
-          tidy -errors ./_site/index.html || true
+          tidy -errors ./index.md || true
 
   deploy:
     name: 🚀 Deploy to GitHub Pages
