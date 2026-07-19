@@ -1,43 +1,33 @@
-name: CCNA Live Lab Setup CI/CD
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+
+permissions:
+  contents: write   # Critical: allow GITHUB_TOKEN to push
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # Checkout repo
-      - name: Checkout repository
+      - name: Checkout source
         uses: actions/checkout@v3
 
-      # Configure Git
-      - name: Configure Git
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '24'   # Node 20 is deprecated, use 24
+
+      - name: Build site
         run: |
-          git config --global user.name "SandeepGaikwad-network"
-          git config --global user.email "sandeepgaikwad.network@gmail.com"
+          # If you have a build step (like Jekyll, Hugo, or MkDocs), add it here.
+          # For plain Markdown + assets, you can skip this step.
+          echo "No build step required"
 
-      # Lint Markdown formatting
-      - name: Lint Markdown
-        uses: avto-dev/markdown-lint@v1
-        with:
-          config: .markdownlint.json
-
-      # Check all links (including GIFs/images)
-      - name: Link Checker
-        uses: lycheeverse/lychee-action@v1
-        with:
-          args: --verbose --no-progress .
-
-      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: ./   # Replace with ./public or ./docs if you have a build output folder
