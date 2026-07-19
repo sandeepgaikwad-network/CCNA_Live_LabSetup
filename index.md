@@ -5,7 +5,7 @@ Welcome to the CCNA Live Lab Setup guide. This site provides diagrams, charts, a
 ---
 
 ## Final Setup
-<video src="assets/CCNA_Live_LAB_Setup.mp4" controls autoplay loop muted></video>
+<video src="assets/CCNA_Live_LAB_Setup_small.mp4" controls autoplay loop muted></video>
 
 ---
 
