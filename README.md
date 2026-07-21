@@ -6,9 +6,11 @@ Each group focuses on a different routing and access control concept, complete w
 [![CCNA](https://img.shields.io/badge/CCNA-Networking-blue)]()
 [![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-green)]()
 
-## Lab Toplogies for All Groups
-- **Group-1** Lab Topology
-![Group-1](assets/Group-1.gif)
+## Lab Topologies for All Groups
+
+- **Group-1**
+Lab Topology:![Group-1](assets/Group-1.gif)
+Lab Manual: ![Lab-Manual](Group-1/README.md)
 
 - **Group-2** Lab Topology
 ![Group-2](assets/Group-2.gif)
