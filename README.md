@@ -70,7 +70,3 @@ Azure Networking Engineer | CCNA Trainer | Technical Advisor
 ---
 
 > ✨ *This repository is designed to help learners visualize network behavior and understand configuration logic through animated demonstrations.*
-
-
-
-[Doc]: Group-1/README.md
