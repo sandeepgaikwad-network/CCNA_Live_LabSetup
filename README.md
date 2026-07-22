@@ -8,9 +8,9 @@ Each group focuses on a different routing and access control concept, complete w
 
 ## Lab Topologies for All Groups
 
-- **Group-1**
+- **Group-1**  
+Lab Manual: [Group-1/README.md]  
 Lab Topology:![Group-1](assets/Group-1.gif)
-Lab Manual: ![Lab-Manual](Group-1/README.md)
 
 - **Group-2** Lab Topology
 ![Group-2](assets/Group-2.gif)
@@ -31,9 +31,7 @@ Lab Manual: ![Lab-Manual](Group-1/README.md)
 The complete integrated topology with all four groups combined:  
 ![Final Setup](assets/Final_Setup.gif)
 
-
 ---
-
 
 ## 🧩 Key Concepts Demonstrated
 
@@ -63,3 +61,6 @@ Azure Networking Engineer | CCNA Trainer | Technical Advisor
 
 > ✨ *This repository is designed to help learners visualize network behavior and understand configuration logic through animated demonstrations.*
 
+
+
+[Doc]: Group-1/README.md
